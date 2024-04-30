@@ -18,5 +18,16 @@ public class SociallingApplication {
     @Column
     private Long applicantId;
 
+    @Column
+    private int maxNum; // 최대인원
+
+    @Column
+    private int curNum; // 현재인원
+
     private String status; // "Pending", "Accepted", "Rejected"
+
+    //== 수강 인원 확인 ==//
+    public boolean isFull() {
+        return curNum >= maxNum;
+    }
 }
