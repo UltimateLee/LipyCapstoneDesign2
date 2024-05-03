@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Entity
 @Getter
 @Setter
@@ -22,7 +21,7 @@ public class Socialing {
     private int currentparticipants; // 현재 참여자 수
     private String date;
 
-    private String status; // "Pending", "Accepted", "Rejected"
+    //private String status; // "Pending", "Accepted", "Rejected"
 
     public Socialing() {
 
@@ -35,11 +34,12 @@ public class Socialing {
         this.date = date;
     }
 
-    //== 수강 인원 확인 ==//
+    //== 소셜링 인원 확인 ==//
     public boolean isFull() {
         return currentparticipants >= maxparticipants;
     }
 
+    //== 소셜링 인원 증가 ==
     public void increaseParticipants() {
         currentparticipants++;
     }
