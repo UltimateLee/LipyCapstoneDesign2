@@ -1,12 +1,15 @@
 package com.lipy.book_record.controller;
 
+import com.lipy.book_record.dto.SocialingListResponse;
+import com.lipy.book_record.dto.SocialingResponse;
+import com.lipy.book_record.dto.UpdateSocialingRequest;
 import com.lipy.book_record.entity.Socialing;
 import com.lipy.book_record.service.SocialingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class SocialingController {
@@ -18,10 +21,40 @@ public class SocialingController {
         this.socialingService = socialingService;
     }
 
-    @PostMapping("/apply/{socialingId}")
+    @GetMapping("/socialing/{id}") // 게시글 조회
+    public ResponseEntity<SocialingResponse> findArticle(@PathVariable long id){
+        Socialing socialing = socialingService.findById(id);
+        return ResponseEntity.ok()
+                .body(new SocialingResponse(socialing));
+    }
+
+    @GetMapping("/socialing") //게시글 목록 조회
+    public ResponseEntity<List<SocialingListResponse>> findAllArticles(){
+        List<SocialingListResponse> socialing = socialingService.findAllSocialings()
+                .stream().map(SocialingListResponse::new).toList();
+        return ResponseEntity.ok().body(socialing);
+    }
+    @DeleteMapping("/socialing/{socialingId}") // 게시글 삭제
+    public ResponseEntity<Void> deleteForSocialing(@PathVariable Long socialingId){
+        socialingService.deleteForSocialing(socialingId);
+        return ResponseEntity.noContent().build();
+    }
+    @PutMapping("/socialing/{socialingId}") // 게시글 수정
+    public ResponseEntity<Socialing> updateForSocialing(@PathVariable long socialingId, @RequestBody UpdateSocialingRequest request){
+        Socialing socialing = socialingService.update(socialingId, request);
+        return ResponseEntity.ok().body(socialing);
+    }
+    @PostMapping("/socialing/posts") // 게시글 생성
+    public ResponseEntity<Socialing> createSocialingPost(@RequestBody Socialing socialing) {
+        Socialing createdPost = socialingService.createSocialingPost(socialing);
+        return ResponseEntity.ok(createdPost);
+    }
+    @PostMapping("/socialing/apply/{socialingId}") // 소셜링 신청
     public ResponseEntity<Socialing> applyForSocialing(@PathVariable Long socialingId) {
         // 소셜링 신청 처리
         Socialing appliedSocialing = socialingService.applyForSocialing(socialingId);
         return ResponseEntity.ok(appliedSocialing);
     }
+
+
 }

@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Getter
 @Setter
@@ -17,19 +19,18 @@ public class Socialing {
 
     private String title;
     private String description;
+    private String writer;
+    private String content;
     private int maxparticipants; // 최대 참여자 수
     private int currentparticipants; // 현재 참여자 수
-    private String date;
+    private Date date;
 
     //private String status; // "Pending", "Accepted", "Rejected"
 
-    public Socialing() {
-
-    }
-
-    public Socialing(String title, String description, int maxParticipants, String date) {
+    public void update(String title, String description,String content,int maxParticipants, Date date) {
         this.title = title;
         this.description = description;
+        this.content = content;
         this.maxparticipants = maxParticipants;
         this.date = date;
     }
