@@ -1,13 +1,13 @@
 package com.lipy.book_record.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -26,6 +26,11 @@ public class Socialing {
     private Date date;
 
     //private String status; // "Pending", "Accepted", "Rejected"
+
+    // 다대다 관계로 멤버와 연결
+    @JsonIgnore
+    @ManyToMany(mappedBy = "favoriteSocialings")
+    private Set<Member> favoritedByMembers = new HashSet<>();
 
     public void update(String title, String description,String content,int maxParticipants, Date date) {
         this.title = title;

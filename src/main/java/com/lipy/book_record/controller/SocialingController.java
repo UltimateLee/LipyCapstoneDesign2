@@ -22,17 +22,24 @@ public class SocialingController {
     }
 
     @GetMapping("/socialing/{id}") // 게시글 조회
-    public ResponseEntity<SocialingResponse> findArticle(@PathVariable long id){
+    public ResponseEntity<SocialingResponse> findSocialing(@PathVariable long id){
         Socialing socialing = socialingService.findById(id);
         return ResponseEntity.ok()
                 .body(new SocialingResponse(socialing));
     }
 
     @GetMapping("/socialing") //게시글 목록 조회
-    public ResponseEntity<List<SocialingListResponse>> findAllArticles(){
+    public ResponseEntity<List<SocialingListResponse>> findAllSocialing(){
         List<SocialingListResponse> socialing = socialingService.findAllSocialings()
                 .stream().map(SocialingListResponse::new).toList();
         return ResponseEntity.ok().body(socialing);
+    }
+
+    @GetMapping("/socialing/hot") // 게시글 목록 인기순(현재 인원 많은 순)
+    public ResponseEntity<List<SocialingListResponse>> findAllSortedByParticipants() {
+        List<SocialingListResponse> sortedSocialings = socialingService.findAllOrderByCurrentParticipants()
+                .stream().map(SocialingListResponse::new).toList();
+        return ResponseEntity.ok(sortedSocialings);
     }
     @DeleteMapping("/socialing/{socialingId}") // 게시글 삭제
     public ResponseEntity<Void> deleteForSocialing(@PathVariable Long socialingId){

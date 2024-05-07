@@ -60,6 +60,9 @@ public class SocialingService {
         return socialingRepository.save(socialing);
     }
 
+    public List<Socialing> findAllOrderByCurrentParticipants() {
+        return socialingRepository.findAllByOrderByCurrentparticipantsAsc();
+    }
     public List<Socialing> findAllSocialings() { // 게시글 목록 조회
         return socialingRepository.findAll();
     }

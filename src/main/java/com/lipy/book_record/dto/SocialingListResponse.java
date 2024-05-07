@@ -2,8 +2,11 @@ package com.lipy.book_record.dto;
 
 import com.lipy.book_record.entity.Socialing;
 import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 @Getter
+@Setter
 public class SocialingListResponse {
     private String title;
     private String description;
@@ -20,5 +23,11 @@ public class SocialingListResponse {
         this.maxparticipants = socialing.getMaxparticipants();
         this.date = socialing.getDate();
     }
+
+    public SocialingListResponse() {
+
+    }
+
+
 }
 
